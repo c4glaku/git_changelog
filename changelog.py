@@ -4,12 +4,14 @@ import subprocess
 import re
 import argparse
 from dotenv import load_dotenv
-import openai
+from openai import OpenAI
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-if not openai.api_key:
-    print("OPENAI_API_KEY environment variable not set in environment.")
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+)
+if not client.api_key:
+    print("Error: OPENAI_API_KEY not set in environment variables")
     sys.exit(1)
 
 def get_recent_commits(n: int):
@@ -135,8 +137,8 @@ def generate_changelog(n: int) -> str:
     prompt = prepare_prompt(detailed_commits)
     
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+        response = client.responses.create(
+            model="gpt-4o",
             messages=[
                 {"role": "user", "content": "You are a helpful assistant that generates changelogs from git commit histories"},
                 {"role": "user", "content": prompt}
