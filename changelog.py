@@ -118,6 +118,8 @@ def prepare_prompt(commits):
     
     prompt += ("Please generate a changelog with clear sections (e.g., Features, Improvements, Bug Fixes) "
                 "using markdown formatting. Provide a concise summary that focues on the changes that matter most to the end user.")
+    
+    # print(f"Current Prompt:\n{prompt}\n")
     return prompt
 
 def generate_changelog(n: int) -> str:
@@ -143,8 +145,9 @@ def generate_changelog(n: int) -> str:
                 {"role": "user", "content": "You are a helpful assistant that generates changelogs from git commit histories"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7, # Adjust temperature for creativity vs. accuracy
+            # temperature=0.7, # Adjust temperature for creativity vs. accuracy
         )
+        return response.output_text.strip()
     except Exception as e:
         return f"Error generating changelog: {e}"
     
