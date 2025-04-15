@@ -137,7 +137,7 @@ def generate_changelog(n: int) -> str:
     prompt = prepare_prompt(detailed_commits)
     
     try:
-        response = client.responses.create(
+        response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
                 {"role": "user", "content": "You are a helpful assistant that generates changelogs from git commit histories"},
