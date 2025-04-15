@@ -139,6 +139,7 @@ def generate_changelog(n: int) -> str:
     prompt = prepare_prompt(detailed_commits)
     
     try:
+        # using completions (old API)
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
@@ -147,7 +148,7 @@ def generate_changelog(n: int) -> str:
             ],
             # temperature=0.7, # Adjust temperature for creativity vs. accuracy
         )
-        return response.output_text.strip()
+        return response.choices[0].message.content
     except Exception as e:
         return f"Error generating changelog: {e}"
     
